@@ -34,7 +34,7 @@ contexts:
   separator:
     - meta_scope: meta.mapping.git.link
     - match: ':'
-      scope: punctuation.separator.mapping.key-value.git.link
+      scope: punctuation.separator.key-value.git.link
       set: [mapping-value-meta, expect-path]
     - match: \n
       pop: 1
@@ -64,7 +64,7 @@ contexts:
     # windows drive letter and separator
     - match: '[A-Za-z](:)(?=[\\/])'
       captures:
-        1: punctuation.separator.drive.git
+        1: punctuation.separator.path.git
       pop: 1
     # homedir tilde operator
     - match: ~(?=/)
@@ -75,10 +75,10 @@ contexts:
 
   path-dir-pattern:
     - match: \.\.(?=[\\/])
-      scope: constant.language.path.parent.git
+      scope: constant.other.path.parent.git
       pop: 1
     - match: \.(?=[\\/])
-      scope: constant.language.path.self.git
+      scope: constant.other.path.self.git
       pop: 1
     - match: ''
       pop: 1

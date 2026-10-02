@@ -32,9 +32,17 @@ Thanks to @username <name@mail-host.domain>.
 #                        ^ punctuation.separator.email.git
 #                                  ^ punctuation.separator.domain.git
 #                                         ^ punctuation.definition.reference.email.end.git
+Update to actions/checkout@v7
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.reference
 This is a <tag> name <tag.name>
 #         ^^^^^ - meta.reference - entity
 #                    ^^^^^^^^^^ - meta.reference - entity
+These are no C#, C#7, C#10 issues.
+#            ^^^^^^^^^^^^^ - constant
+This is a valid u/r#1 issue.
+#               ^^^^^ meta.reference.issue.git constant.other.reference.issue.git
+#                ^ punctuation.separator.reference.issue.git
+#                  ^ punctuation.definition.reference.issue.git
 Issue user/repo#230 is not closed yet.
 # <- meta.message.git.commit
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit
@@ -47,7 +55,13 @@ Issue repo-with/many-hyphen_and_underscores#1 closed yet.
 #     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ constant.other.reference.issue.git
 #              ^ punctuation.separator.reference.issue.git
 #                                          ^ punctuation.definition.reference.issue.git
-Issue repo#230 is not resolved yet.
+Issue -user-/-repo-#230 starting and ending with hyphens.
+# <- meta.message.git.commit
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit
+#     ^^^^^^^^^^^^^^^^^ constant.other.reference.issue.git
+#           ^ punctuation.separator.reference.issue.git
+#                  ^ punctuation.definition.reference.issue.git
+Issue user#230 is not resolved yet.
 # <- meta.message.git.commit
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit
 #     ^^^^^^^^ constant.other.reference.issue.git
@@ -93,7 +107,7 @@ Fix: #203
 #^^^^^^^^ meta.message.git.commit
 #^^^^^^^^ meta.reference.issue.git
 #^^ keyword.other.resolved-issue.git
-#  ^ punctuation.separator.mapping.pair.resolved-issue.git
+#  ^ punctuation.separator.key-value.resolved-issue.git
 #    ^ punctuation.definition.reference.issue.git
 #    ^^^^ constant.other.reference.issue.git
 #
@@ -118,20 +132,69 @@ This commit applies all changes required to satisfy the JSON format unittest.
 # <- comment.line.git.commit punctuation.definition.comment.git.commit
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #
+  Change-Id: I3b3613e336397febf02cd8e5c14c53d493343e93
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit
+# ^^^^^^^^^ keyword.other.trailer.git.commit
+#          ^ punctuation.separator.key-value.git.commit
+#            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ constant.language.change-id.git.commit
+  Co-authored-by: username <user.name@domain.com>
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit
+#                          ^^^^^^^^^^^^^^^^^^^^^^ meta.reference.email.git
+# ^^^^^^^^^^^^^^ keyword.other.trailer.git.commit
+#               ^ punctuation.separator.key-value.git.commit
+#                          ^ punctuation.definition.reference.email.begin.git
+#                           ^^^^^^^^^^^^^^^^^^^^ entity.name.reference.email.git
+#                               ^ - punctuation.separator.email.git
+#                                    ^ punctuation.separator.email.git
+#                                           ^ punctuation.separator.domain.git
+#                                               ^ punctuation.definition.reference.email.end.git
+  Reviewed-by: username <user.name@domain.com>
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit
+#                       ^^^^^^^^^^^^^^^^^^^^^^ meta.reference.email.git
+# ^^^^^^^^^^^ keyword.other.trailer.git.commit
+#            ^ punctuation.separator.key-value.git.commit
+#                       ^ punctuation.definition.reference.email.begin.git
+#                        ^^^^^^^^^^^^^^^^^^^^ entity.name.reference.email.git
+#                            ^ - punctuation.separator.email.git
+#                                 ^ punctuation.separator.email.git
+#                                        ^ punctuation.separator.domain.git
+#                                            ^ punctuation.definition.reference.email.end.git
   Signed-off-by: username <user.name@domain.com>
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit
 #                         ^^^^^^^^^^^^^^^^^^^^^^ meta.reference.email.git
-# ^^^^^^^^^^^^^ keyword.other.signed-off-by.git.commit
-#              ^ punctuation.separator.mapping.pair.git.commit
+# ^^^^^^^^^^^^^ keyword.other.trailer.git.commit
+#              ^ punctuation.separator.key-value.git.commit
 #                         ^ punctuation.definition.reference.email.begin.git
 #                          ^^^^^^^^^^^^^^^^^^^^ entity.name.reference.email.git
 #                              ^ - punctuation.separator.email.git
 #                                   ^ punctuation.separator.email.git
 #                                          ^ punctuation.separator.domain.git
 #                                              ^ punctuation.definition.reference.email.end.git
+  See-also: 21dde213 subject
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit
+# ^^^^^^^^ keyword.other.trailer.git.commit
+#         ^ punctuation.separator.key-value.git.commit
+#           ^^^^^^^^ constant.other.hash.git
+
+  -No-trailer-by: value
+# ^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit - keyword - punctuation
+
+  No_railer-by: value
+# ^^^^^^^^^^^^^^^^^^^ meta.message.git.commit - keyword - punctuation
+
+  No.railer-by: value
+# ^^^^^^^^^^^^^^^^^^^ meta.message.git.commit - keyword - punctuation
+
+  No-Tℜailer-by: value
+# ^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit - keyword - punctuation
+
   This commit references a hash: 21dde213
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit
 #                                ^^^^^^^^ constant.other.hash.git
+  This commit does not references a hash: user@21dde213
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit
+#                                         ^^^^^^^^^^^^^ constant.other.hash.git
+#                                             ^ punctuation.separator.reference.commit.git
   This commit references a hash on a different repo: test/repo@21dde213
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.message.git.commit
 #                                                    ^^^^^^^^^^^^^^^^^^ constant.other.hash.git
@@ -178,7 +241,7 @@ This commit applies all changes required to satisfy the JSON format unittest.
 # <- comment.line.git.commit punctuation.definition.comment.git.commit
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 # ^^^^^^^^^ markup.heading.on-branch.git.commit
-#           ^^^^^^^^^^^^^^^^^ constant.language.branch-name.git.commit
+#           ^^^^^^^^^^^^^^^^^ entity.name.reference.branch.git.commit
 #
 # Changes to be committed:
 # <- comment.line.git.commit punctuation.definition.comment.git.commit
@@ -188,23 +251,23 @@ This commit applies all changes required to satisfy the JSON format unittest.
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
 #    ^^^^^^^^ keyword.other.change-list.git.commit
-#            ^ punctuation.separator.mapping.pair.change-list.git.commit
+#            ^ punctuation.separator.key-value.change-list.git.commit
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.git.commit markup.inserted.file.git.commit
 #    modified:   gitconfig/Snippets/section.sublime-snippet
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
 #    ^^^^^^^^ keyword.other.change-list.git.commit
-#            ^ punctuation.separator.mapping.pair.change-list.git.commit
+#            ^ punctuation.separator.key-value.change-list.git.commit
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.git.commit markup.changed.file.content.git.commit
 #    renamed:    gitconfig/old_name -> gitconfig/new_name
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
-#                                   ^^ punctuation.separator.mapping.pair.path.git.commit
+#                                   ^^ punctuation.separator.key-value.path.git.commit
 #    deleted:    gitconfig/Symbol List.tmPreferences
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
 #    ^^^^^^^ keyword.other.change-list.git.commit
-#           ^ punctuation.separator.mapping.pair.change-list.git.commit
+#           ^ punctuation.separator.key-value.change-list.git.commit
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.git.commit markup.deleted.file.git.commit
 # zum Commit vorgemerkte Änderungen:
 # <- comment.line.git.commit punctuation.definition.comment.git.commit
@@ -214,23 +277,23 @@ This commit applies all changes required to satisfy the JSON format unittest.
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
 #    ^^^^^^^^^^ keyword.other.change-list.git.commit
-#              ^ punctuation.separator.mapping.pair.change-list.git.commit
+#              ^ punctuation.separator.key-value.change-list.git.commit
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.git.commit markup.inserted.file.git.commit
 #    geändert:   gitconfig/Snippets/section.sublime-snippet
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
 #    ^^^^^^^^ keyword.other.change-list.git.commit
-#            ^ punctuation.separator.mapping.pair.change-list.git.commit
+#            ^ punctuation.separator.key-value.change-list.git.commit
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.git.commit markup.changed.file.content.git.commit
 #    renommé:    gitconfig/old_name -> gitconfig/new_name
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
-#                                   ^^ punctuation.separator.mapping.pair.path.git.commit
+#                                   ^^ punctuation.separator.key-value.path.git.commit
 #    gelöscht:   gitconfig/Symbol List.tmPreferences
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
 #    ^^^^^^^^ keyword.other.change-list.git.commit
-#            ^ punctuation.separator.mapping.pair.change-list.git.commit
+#            ^ punctuation.separator.key-value.change-list.git.commit
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.git.commit markup.deleted.file.git.commit
 # 要提交的变更:
 # <- comment.line.git.commit punctuation.definition.comment.git.commit
@@ -240,37 +303,43 @@ This commit applies all changes required to satisfy the JSON format unittest.
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
 #    ^^^ keyword.other.change-list.git.commit
-#       ^ punctuation.separator.mapping.pair.change-list.git.commit
+#       ^ punctuation.separator.key-value.change-list.git.commit
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.git.commit markup.inserted.file.git.commit
 #    修改:         gitconfig/Snippets/section.sublime-snippet
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
 #    ^^ keyword.other.change-list.git.commit
-#      ^ punctuation.separator.mapping.pair.change-list.git.commit
+#      ^ punctuation.separator.key-value.change-list.git.commit
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.git.commit markup.changed.file.content.git.commit
 #    重命名:    gitconfig/old_name -> gitconfig/new_name
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
-#                               ^^ punctuation.separator.mapping.pair.path.git.commit
+#                               ^^ punctuation.separator.key-value.path.git.commit
 #    删除:         gitconfig/Symbol List.tmPreferences
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.git.commit
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.change-list.git.commit
 #    ^^ keyword.other.change-list.git.commit
-#      ^ punctuation.separator.mapping.pair.change-list.git.commit
+#      ^ punctuation.separator.key-value.change-list.git.commit
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.git.commit markup.deleted.file.git.commit
 # ------------------------ >8 ------------------------
 # Do not touch the line above.
 # Everything below will be removed.
-diff --git a/modules/compare.py b/modules/compare.py
+diff --git i/modules/compare.py b/modules/compare.py
 index 5610357..b9b47f3 100644
---- a/modules/compare.py
-+++ b/modules/compare.py
+--- c/modules/compare.py
++++ w/modules/compare.py
+# <- source.diff.git meta.block.header.diff meta.diff.header.to-file meta.header.to-file.diff punctuation.definition.to-file.diff
+#^^^^^^^^^^^^^^^^^^^^^^^^ source.diff.git meta.block.header.diff meta.diff.header.to-file meta.header.to-file.diff
+#^^ punctuation.definition.to-file.diff
+#   ^ variable.parameter.source.diff
+#    ^^^^^^^^^^^^^^^^^^^ meta.path.diff string.unquoted.git
 @@ -97,7 +97,7 @@ def set_against_branch(git_gutter, **kwargs):
              message = pieces[0]
              branch = pieces[1][11:]   # skip 'refs/heads/'
              commit = pieces[2][0:7]   # 7-digit commit hash
 -            return [branch, '%s %s' % (commit, message)]
 +            return [branch, '%s | %s' % (commit, message)]
-
+# <- source.diff.git meta.block.delta.diff markup.inserted.diff punctuation.definition.inserted.diff
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.diff.git meta.block.delta.diff markup.inserted.diff
          # Create the list of branches to show in the quick panel
          items = [parse_result(r) for r in output.split('\n')]

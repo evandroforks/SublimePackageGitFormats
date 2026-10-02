@@ -9,22 +9,27 @@
 #^^^^^^^^^^^^^^^^^^ comment.line
 
 # SECTION HEADER TESTS
-[section]
-# <- meta.brackets punctuation.definition.brackets.begin
-#^^^^^^^ meta.brackets entity.name
-#       ^ meta.brackets punctuation.definition.brackets.end
-#        ^ -meta.brackets
-[section "subsection"]
-# <- meta.brackets punctuation.definition.brackets.begin
-#^^^^^^^^^^^^^ meta.brackets
-#^^^^^^^ entity.name
-#        ^^^^^^^^^^^^ string.quoted.double
-#        ^ punctuation.definition.string.begin
-#                   ^ punctuation.definition.string.end
-#                    ^ punctuation.definition.brackets.end
+[section]  # color section
+# <- meta.section meta.brackets punctuation.section.brackets.begin
+#^^^^^^^ meta.section meta.brackets entity.name.section - punctuation
+#       ^ meta.section meta.brackets punctuation.section.brackets.end
+#        ^^^^^^^^^^^^^^^^^^ meta.section - meta.brackets
+#          ^ punctuation.definition.comment
+#          ^^^^^^^^^^^^^^^^ comment.line
+    [section "subsection"]
+# <- meta.section - meta.brackets
+#^^^ meta.section - meta.brackets
+#   ^^^^^^^^^^^^^^^^^^^^^^ meta.section meta.brackets
+#                         ^ meta.section - meta.brackets
+#    ^^^^^^^ entity.name
+#            ^^^^^^^^^^^^ string.quoted.double
+#            ^ punctuation.definition.string.begin
+#                       ^ punctuation.definition.string.end
+#                        ^ punctuation.section.brackets.end
 [section \"subsection"]
-# <- meta.brackets punctuation.definition.brackets.begin
-#^^^^^^^^^^^^^ meta.brackets
+# <- meta.section meta.brackets punctuation.section.brackets.begin
+#^^^^^^^^^^^^^^^^^^^^^^ meta.section meta.brackets
+#                      ^ meta.section - meta.brackets
 #^^^^^^^ entity.name
 #        ^ invalid.illegal
 [section "\slashes\are\legal"]
@@ -52,23 +57,23 @@
 
 # LEGACY SECTION HEADER SYNTAX
 [section.subsection.subsubsection]
-# <- meta.brackets
-#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.brackets
-#                                 ^ - meta.brackets
-# <- punctuation.definition.brackets.begin
+# <- meta.section
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.section meta.brackets
+#                                 ^ meta.section - meta.brackets
+# <- punctuation.section.brackets.begin
 #^^^^^^^ entity.name.section
 #       ^ punctuation.accessor.dot
 #        ^^^^^^^^^^ string.unquoted
 #                  ^ punctuation.accessor.dot
 #                   ^^^^^^^^^^^^^ string.unquoted
-#                                ^ punctuation.definition.brackets.end
+#                                ^ punctuation.section.brackets.end
 
 # LEGACY SECTION HEADER SYNTAX
 [se\ct\\ion.s"ub\se\\ct\"ion
-# <- meta.brackets
-#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.brackets
-#                            ^ - meta.brackets
-# <- punctuation.definition.brackets.begin
+# <- meta.section
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.section meta.brackets
+#                            ^ - meta.section
+# <- punctuation.section.brackets.begin
 #^^ entity.name.section
 #  ^ invalid.illegal.section-name
 #   ^^ entity.name.section
@@ -88,38 +93,41 @@
 
 # COLOR TESTS
 [color "diff"]
-# <- meta.brackets punctuation.definition.brackets.begin
-#^^^^^^^^^^^^^ meta.brackets
+# <- meta.section meta.brackets punctuation.section.brackets.begin
+#^^^^^^^^^^^^^ meta.section meta.brackets
 #^^^^^ entity.name
 #      ^^^^^^ string.quoted.double
 #      ^ punctuation.definition.string.begin
 #           ^ punctuation.definition.string.end
-#            ^ punctuation.definition.brackets.end
-#             ^ -meta.brackets
+#            ^ punctuation.section.brackets.end
+#             ^ meta.section - meta.brackets
     old = red
-# <- meta.mapping
-#^^^^^^^^^^^^ meta.mapping
-#   ^^^ variable.other.readwrite
-#      ^ -variable.other.readwrite
-#       ^ keyword.operator.assignment
-#        ^ -keyword.operator.assignment
-#         ^^^ meta.mapping.value support.constant.color
+# <- meta.mapping.git.config
+#^^^ meta.mapping.git.config
+#   ^^^ meta.mapping.key.git.config
+#      ^^^ meta.mapping.git.config
+#         ^^^ meta.mapping.value.git.config support.constant.color.git.config
+#   ^^^ string.unquoted
+#      ^ - string.unquoted
+#       ^ punctuation.separator.key-value
+#        ^ - punctuation.separator.key-value
+#         ^^^ support.constant.color
     new = #00aa00 # this should be a comment
 # <- meta.mapping
 #^^^^^^^^^^^^^^^^ meta.mapping
-#   ^^^ variable.other.readwrite
-#      ^ -variable.other.readwrite
-#       ^ keyword.operator.assignment
-#        ^ -keyword.operator.assignment
+#   ^^^ string.unquoted
+#      ^ - string.unquoted
+#       ^ punctuation.separator.key-value
+#        ^ - punctuation.separator.key-value
 #         ^ comment.line punctuation.definition.comment
 #          ^^^^^^^ comment.line
     commit = bold yellow
 # <- meta.mapping
 #^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping
-#   ^^^^^^ variable.other.readwrite
-#         ^ -variable.other.readwrite
-#          ^ keyword.operator.assignment
-#           ^ -keyword.operator.assignment
+#   ^^^^^^ string.unquoted
+#         ^ - string.unquoted
+#          ^ punctuation.separator.key-value
+#           ^ - punctuation.separator.key-value
 #            ^^^^^^^^^^^ meta.mapping.value
 #            ^^^^ support.constant.color-attribute
 #                 ^^^^^^ support.constant.color
@@ -159,8 +167,8 @@
 [escapes]
     quoted = "\\ \" \b \n \t"
 #^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping
-#   ^^^^^^ variable.other.readwrite
-#          ^ keyword.operator.assignment
+#   ^^^^^^ string.unquoted
+#          ^ punctuation.separator.key-value
 #            ^^^^^^^^^^^^^^^^ meta.mapping.value string.quoted.double
 #             ^^ constant.character.escape
 #                ^^ constant.character.escape
@@ -181,42 +189,42 @@
 [bools]
     foo = true
 #^^^^^^^^^^^^^ meta.mapping
-#   ^^^ variable.other.readwrite
-#       ^ keyword.operator.assignment
+#   ^^^ string.unquoted
+#       ^ punctuation.separator.key-value
 #         ^^^^ meta.mapping.value constant.language
     foo = false
 #^^^^^^^^^^^^^^ meta.mapping
-#   ^^^ variable.other.readwrite
-#       ^ keyword.operator.assignment
+#   ^^^ string.unquoted
+#       ^ punctuation.separator.key-value
 #         ^^^^^ meta.mapping.value constant.language
     foo = on
 #^^^^^^^^^^^ meta.mapping
-#   ^^^ variable.other.readwrite
-#       ^ keyword.operator.assignment
+#   ^^^ string.unquoted
+#       ^ punctuation.separator.key-value
 #         ^^ meta.mapping.value constant.language
     foo = off
 #^^^^^^^^^^^^ meta.mapping
-#   ^^^ variable.other.readwrite
-#       ^ keyword.operator.assignment
+#   ^^^ string.unquoted
+#       ^ punctuation.separator.key-value
 #         ^^^ meta.mapping.value constant.language
     foo = no
 #^^^^^^^^^^^ meta.mapping
-#   ^^^ variable.other.readwrite
-#       ^ keyword.operator.assignment
+#   ^^^ string.unquoted
+#       ^ punctuation.separator.key-value
 #         ^^ meta.mapping.value constant.language
     foo = yes
 #^^^^^^^^^^^^ meta.mapping
-#   ^^^ variable.other.readwrite
-#       ^ keyword.operator.assignment
+#   ^^^ string.unquoted
+#       ^ punctuation.separator.key-value
 #         ^^^ meta.mapping.value constant.language
 
 # ILLEGAL NEWLINE IN SECTION TEST
 [section
-#^^^^^^^^ meta.brackets
+#^^^^^^^^ meta.section
 #^^^^^^^ entity.name
 #       ^ invalid.illegal.unexpected.eol
 ]
-# <- punctuation.definition.brackets.end invalid.illegal.stray-bracket
+# <- invalid.illegal.stray-bracket
 #
 # INVALID TEXT AFTER SECTION TEST
 [stray-bracket]] and anything # comment
@@ -230,7 +238,7 @@
 
 # STRAY BRACKET TEST
 stray-bracket]
-#            ^ punctuation.definition.brackets.end invalid.illegal.stray-bracket
+#            ^ invalid.illegal.stray-bracket
 
 # STRING TESTS
 [strings]
@@ -454,27 +462,28 @@ stray-bracket]
 
 # REAL WORLD SAMPLE TESTS
 [alias]
-# <- meta.brackets punctuation.definition.brackets.begin
-#^^^^^^ meta.brackets
+# <- meta.section meta.brackets punctuation.section.brackets.begin
+#^^^^^^ meta.section meta.brackets
 #^^^^^ entity.name
-#     ^ punctuation.definition.brackets.end
+#     ^ punctuation.section.brackets.end
+#      ^ meta.section - meta.brackets
     branch-author = for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)'
 # <- meta.mapping
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping
-#   ^^^^^^^^^^^^^ variable.other.readwrite
-#                ^ -variable.other.readwrite
-#                 ^ keyword.operator.assignment
-#                  ^ -keyword.operator.assignment
+#   ^^^^^^^^^^^^^ string.unquoted
+#                ^ - string.unquoted
+#                 ^ punctuation.separator.key-value
+#                  ^ - punctuation.separator.key-value
 #                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
 #                   ^^^^^^^^^^^^ string.unquoted.value
 
     fatch = fetch --all --prune --tags
 # <- meta.mapping
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping
-#   ^^^^^ variable.other.readwrite
-#        ^ -variable.other.readwrite
-#         ^ keyword.operator.assignment
-#          ^ -keyword.operator.assignment
+#   ^^^^^ string.unquoted
+#        ^ - string.unquoted
+#         ^ punctuation.separator.key-value
+#          ^ - punctuation.separator.key-value
 #           ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
 #           ^^^^^ string.unquoted.value
 #                 ^^^^^ string.unquoted.value
@@ -483,10 +492,10 @@ stray-bracket]
     lgrep = log -1 -E -i --grep
 # <- meta.mapping
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping
-#   ^^^^^ variable.other.readwrite
-#        ^ -variable.other.readwrite
-#         ^ keyword.operator.assignment
-#          ^ -keyword.operator.assignment
+#   ^^^^^ string.unquoted
+#        ^ - string.unquoted
+#         ^ punctuation.separator.key-value
+#          ^ - punctuation.separator.key-value
 #           ^^^^^^^^^^^^^^^^^^^ meta.mapping.value
 #           ^^^ string.unquoted.value
 #               ^^ string.unquoted.value
@@ -497,10 +506,10 @@ stray-bracket]
     pushf = push --force-with-lease
 # <- meta.mapping
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping
-#   ^^^^^ variable.other.readwrite
-#        ^ -variable.other.readwrite
-#         ^ keyword.operator.assignment
-#          ^ -keyword.operator.assignment
+#   ^^^^^ string.unquoted
+#        ^ - string.unquoted
+#         ^ punctuation.separator.key-value
+#          ^ - punctuation.separator.key-value
 #           ^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
 #           ^^^^ string.unquoted.value
 #                ^^^^^^^^^^^^^^^^^^ string.unquoted.value
@@ -508,10 +517,10 @@ stray-bracket]
     sla = log --oneline --decorate --graph --all
 # <- meta.mapping
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping
-#   ^^^ variable.other.readwrite
-#      ^ -variable.other.readwrite
-#       ^ keyword.operator.assignment
-#        ^ -keyword.operator.assignment
+#   ^^^ string.unquoted
+#      ^ - string.unquoted
+#       ^ punctuation.separator.key-value
+#        ^ - punctuation.separator.key-value
 #         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
 #         ^^^ string.unquoted.value
 #             ^^^^^^^^^
@@ -525,8 +534,8 @@ stray-bracket]
 #  ^^^^^ meta.mapping.key
 #       ^^^ meta.mapping
 #          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
-#  ^^^^^ variable.other.readwrite
-#        ^ keyword.operator.assignment
+#  ^^^^^ string.unquoted
+#        ^ punctuation.separator.key-value
 #          ^ keyword.control.import.shell
 #           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.shell
    serve = "!git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git"
@@ -535,8 +544,8 @@ stray-bracket]
 #  ^^^^^ meta.mapping.key
 #       ^^^ meta.mapping
 #          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
-#  ^^^^^ variable.other.readwrite
-#        ^ keyword.operator.assignment
+#  ^^^^^ string.unquoted
+#        ^ punctuation.separator.key-value
 #          ^ string.quoted.double punctuation.definition.string.begin
 #           ^ keyword.control.import.shell
 #            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.shell
@@ -560,8 +569,8 @@ stray-bracket]
 #             ^^^ meta.mapping - meta.mapping.key - meta.mapping.value
 #                ^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
 #                                       ^ - meta.mapping
-# ^^^^^^^^^^^^ variable.other.readwrite
-#              ^ keyword.operator.assignment
+# ^^^^^^^^^^^^ string.unquoted
+#              ^ punctuation.separator.key-value
 #                ^ string.quoted.double punctuation.definition.string.begin
 #                 ^ keyword.control.import.shell
 #                 ^ - source.shell
@@ -573,8 +582,8 @@ stray-bracket]
 #             ^^^ meta.mapping - meta.mapping.key - meta.mapping.value
 #                ^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
 #                                       ^ - meta.mapping
-# ^^^^^^^^^^^^ variable.other.readwrite
-#              ^ keyword.operator.assignment
+# ^^^^^^^^^^^^ string.unquoted
+#              ^ punctuation.separator.key-value
 #                ^ string.quoted.double punctuation.definition.string.begin
 #                 ^ keyword.control.import.shell
 #                 ^ - source.shell
@@ -586,8 +595,8 @@ stray-bracket]
 # ^^^^^^^^^^^^ meta.mapping.key
 #             ^^^ meta.mapping - meta.mapping.key - meta.mapping.value
 #                ^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
-# ^^^^^^^^^^^^ variable.other.readwrite
-#              ^ keyword.operator.assignment
+# ^^^^^^^^^^^^ string.unquoted
+#              ^ punctuation.separator.key-value
 #                ^ string.quoted.double punctuation.definition.string.begin
 #                 ^ keyword.control.import.shell
 #                 ^ - source.shell
@@ -601,8 +610,8 @@ stray-bracket]
 # ^^^^^^^^^^^^ meta.mapping.key
 #             ^^^ meta.mapping - meta.mapping.key - meta.mapping.value
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
-# ^^^^^^^^^^^^ variable.other.readwrite
-#              ^ keyword.operator.assignment
+# ^^^^^^^^^^^^ string.unquoted
+#              ^ punctuation.separator.key-value
 #                ^ string.quoted.double punctuation.definition.string.begin
 #                 ^ keyword.control.import.shell
 #                 ^ - source.shell
@@ -614,8 +623,8 @@ stray-bracket]
 # ^^^^^^^^^^^^ meta.mapping.key
 #             ^^^ meta.mapping - meta.mapping.key - meta.mapping.value
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
-# ^^^^^^^^^^^^ variable.other.readwrite
-#              ^ keyword.operator.assignment
+# ^^^^^^^^^^^^ string.unquoted
+#              ^ punctuation.separator.key-value
 #                ^ string.quoted.double punctuation.definition.string.begin
 #                 ^ keyword.control.import.shell
 #                 ^ - source.shell
@@ -628,8 +637,8 @@ stray-bracket]
 # ^^^^^^^^^^^^ meta.mapping.key
 #             ^^^ meta.mapping - meta.mapping.key - meta.mapping.value
 #                ^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
-# ^^^^^^^^^^^^ variable.other.readwrite
-#              ^ keyword.operator.assignment
+# ^^^^^^^^^^^^ string.unquoted
+#              ^ punctuation.separator.key-value
 #                ^ string.quoted.double punctuation.definition.string.begin
 #                 ^ keyword.control.import.shell
 #                 ^ - source.shell
@@ -647,8 +656,8 @@ stray-bracket]
 # ^^^^^^^^^^^^ meta.mapping.key
 #             ^^^ meta.mapping - meta.mapping.key - meta.mapping.value
 #                ^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value
-# ^^^^^^^^^^^^ variable.other.readwrite
-#              ^ keyword.operator.assignment
+# ^^^^^^^^^^^^ string.unquoted
+#              ^ punctuation.separator.key-value
 #                ^ string.quoted.double punctuation.definition.string.begin
 #                 ^ keyword.control.import.shell
 #                 ^ - source.shell

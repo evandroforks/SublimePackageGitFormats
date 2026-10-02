@@ -8,14 +8,16 @@ scope: text.git.config
 version: 2
 
 file_extensions:
-  - gitconfig                # /etc/gitconfig
+  - gitconfig                # *.gitconfig, /etc/gitconfig
+
+hidden_file_extensions:
   - .gitconfig               # ~/.gitconfig
   - .gitmodules              # ~/.gitmodules
 
 first_line_match: ^\[core\]  # .git/config files always start with [core]
 
 variables:
-  variable_name: '[a-zA-Z][\w-]*'
+  key_name: '[a-zA-Z][\w-]*'
   zero_to_255: 25[0-5]|2[0-4][0-9]|1\d\d|[1-9][0-9]|[0-9]
 
 contexts:
@@ -31,22 +33,29 @@ contexts:
     # Note that this does not match [color] (without the subsection). This is
     # because [color] doesn't actually take color values.
     - match: ^\s*(?=\[\s*color\s+\")
-      push: [key-color-pair, section-header]
+      push: [key-color-pair, section-header-meta, section-header]
     # section-other matches all sections except [color "subsection"].
     - match: ^\s*(?=\[)
-      push: [key-value-pair, section-header]
+      push: [key-value-pair, section-header-meta, section-header]
 
-##[ SECTION HEADERS ]##################################################
+###[ SECTION HEADERS ]#########################################################
 
   section-header:
     - match: \[
-      scope: punctuation.definition.brackets.begin.git.config
-      set: [expect-line-end, section-header-end, section-name]
+      scope: punctuation.section.brackets.begin.git.config
+      set: [section-header-end, section-name]
+
+  section-header-meta:
+    - meta_scope: meta.section.git.config
+    - match: $\n?
+      pop: 1
+    - match: \S
+      scope: invalid.illegal.expected.eol.git.config
 
   section-header-end:
     - meta_scope: meta.brackets.git.config
     - match: \]
-      scope: punctuation.definition.brackets.end.git.config
+      scope: punctuation.section.brackets.end.git.config
       pop: 1
     - include: illegal-line-end-pop
     - match: \S
@@ -99,19 +108,19 @@ contexts:
     - match: (?=^\s*\[) # start of new section
       pop: 1
     - match: \]
-      scope: punctuation.definition.brackets.end.git.config invalid.illegal.stray-bracket.git.config
+      scope: invalid.illegal.stray-bracket.git.config
 
-##[ SECTION BODY ]#####################################################
+###[ SECTION BODY ]############################################################
 
   # changed = red
   # untracked = bold green
   key-color-pair:
-    - match: ^(\s*)({{variable_name}})(\s*(\=)\s*)
+    - match: ^(\s*)({{key_name}})(\s*(=)\s*)
       captures:
         1: meta.mapping.git.config
-        2: meta.mapping.key.git.config variable.other.readwrite.git.config
+        2: meta.mapping.key.git.config string.unquoted.git.config
         3: meta.mapping.git.config
-        4: keyword.operator.assignment.git.config
+        4: punctuation.separator.key-value.git.config
       push:
         - meta_content_scope: meta.mapping.value.git.config
         - include: color-value
@@ -120,19 +129,19 @@ contexts:
 
   # key = val
   key-value-pair:
-    - match: ^(\s*)({{variable_name}})(\s*(\=)\s*)
+    - match: ^(\s*)({{key_name}})(\s*(=)\s*)
       captures:
         1: meta.mapping.git.config
-        2: meta.mapping.key.git.config variable.other.readwrite.git.config
+        2: meta.mapping.key.git.config string.unquoted.git.config
         3: meta.mapping.git.config
-        4: keyword.operator.assignment.git.config
+        4: punctuation.separator.key-value.git.config
       push:
         - meta_content_scope: meta.mapping.value.git.config
         - include: other-value
         - include: line-end
     - include: expect-section
 
-##[ VALUES ]###########################################################
+###[ VALUES ]##################################################################
 
   color-value:
     # example: bold, italic, underline
@@ -196,7 +205,7 @@ contexts:
         - include: line-end
         - include: Git Common.sublime-syntax#pretty-formats-as-arg-minimal
 
-##[ PROTOTYPES ]#######################################################
+###[ PROTOTYPES ]##############################################################
 
   # The only valid escapes: '\b', '\n', '\t', '\"', '\\'.
   escape:
@@ -226,7 +235,7 @@ contexts:
     - match: \S
       scope: invalid.illegal.expected.eol.git.config
 
-##[ ILLEGAL ]##########################################################
+###[ ILLEGAL ]#################################################################
 
   illegal-line-end:
     - match: $\n?
